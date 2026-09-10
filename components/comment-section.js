@@ -19,6 +19,22 @@ const createCommentSection = (data) => {
         sectionWrapper.append(commentCard);
     }
 
+    sectionWrapper.addEventListener("verify-structure", (ev) => {
+        const card = createCommentCard(ev.detail);
+        const hasSibling = ev.target.nextElementSibling;
+        const hasParent = ev.target.parentElement;
+
+        if (hasParent && hasParent.classList.contains("comment-section__replies")) {
+            replySection.appendChild(card);
+        } else if (hasSibling && hasSibling.classList.contains("comment-section__replies")) {
+            replySection.appendChild(card);
+        } else if (hasSibling === null) {
+            replySection.appendChild(card);
+            sectionWrapper.appendChild(replySection);
+        }
+    })
+
+
     return sectionWrapper;
 
 }

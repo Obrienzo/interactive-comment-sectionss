@@ -1,12 +1,13 @@
 import createCommentSection from "./components/comment-section.js";
-import createReplyCard from "./components/reply-card.js";
+import createSendForm from "./components/send-form.js";
+import createCommentCard from "./components/comment-card.js";
 
 window.addEventListener("load", async () => {
     try {
         const response = await fetch("./data.json");
         
         if (!response.ok) {
-            throw new Error("Failed to fetch the data", response.status);
+            throw new Error(`Failed to fetch the comments: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -27,13 +28,26 @@ window.addEventListener("load", async () => {
 
         commentArea.append(...commentList);
 
-        const replyCard = createReplyCard(user);
+        const sendForm = createSendForm(user, "SEND");
 
-        app.append(commentArea, replyCard);
+        app.append(commentArea, sendForm);
 
         document.body.append(app);
 
-    } catch {
-        console.error("No data got");
+        commentArea.addEventListener("reply-card", (ev) => {
+            const card = ev.target;
+            const replyForm = createSendForm(user, "REPLY");
+            card.after(replyForm);
+        });
+
+        app.addEventListener("send-comment", (ev) => {
+            const createCard = createCommentCard(ev.detail);
+            commentArea.appendChild(createCard);
+            console.log(ev.detail);
+        });
+
+
+    } catch (error) {
+        console.error("We couldn't load the comments. Please refresh the page or try again later.", error);
     }
 })
