@@ -1,5 +1,6 @@
-const createCardDetails = (user, createdAt) => {
+const createCardDetails = (user, createdAt, owner) => {
     const { image, username } = user;
+    
     const userDetails = document.createElement("div");
     userDetails.classList.add("comment-card__user-data");
 
@@ -10,7 +11,7 @@ const createCardDetails = (user, createdAt) => {
 
     const userName = document.createElement("span");
     userName.classList.add("user-data__name");
-    userName.textContent = username;
+    userName.innerHTML = owner === username ? `<span>${username}</span> <span class="user-data__tag">you</span>` : `${username}`;
 
     const postTimeline = document.createElement("span");
     postTimeline.classList.add("user-data__post-timeline");

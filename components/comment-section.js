@@ -1,26 +1,24 @@
 import createCommentCard from "./comment-card.js"
 
-const createCommentSection = (data) => {
+const createCommentSection = (data, owner) => {
     const sectionWrapper = document.createElement("section");
     sectionWrapper.classList.add("comment-section");
 
-    const commentCard = createCommentCard(data);
+    const commentCard = createCommentCard(data, owner);
 
     const replySection = document.createElement("div");
     replySection.classList.add("comment-section__replies");
-
-    const replies = data.replies.map((reply) => createCommentCard(reply));
-
-    replySection.append(...replies);
     
-    if (!(data.replies.length <= 0)) {
+    if (data.replies && !(data.replies.length <= 0)) {
+        const replies = data.replies.map((reply) => createCommentCard(reply, owner));
+        replySection.append(...replies);
         sectionWrapper.append(commentCard, replySection);
     } else {
         sectionWrapper.append(commentCard);
     }
 
     sectionWrapper.addEventListener("verify-structure", (ev) => {
-        const card = createCommentCard(ev.detail);
+        const card = createCommentCard(ev.detail, owner);
         const hasSibling = ev.target.nextElementSibling;
         const hasParent = ev.target.parentElement;
 
@@ -32,8 +30,7 @@ const createCommentSection = (data) => {
             replySection.appendChild(card);
             sectionWrapper.appendChild(replySection);
         }
-    })
-
+    });
 
     return sectionWrapper;
 

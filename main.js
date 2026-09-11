@@ -24,7 +24,7 @@ window.addEventListener("load", async () => {
         const commentArea = document.createElement("div");
         commentArea.classList.add("app__comment-area");
 
-        const commentList = comments.map((comment) => createCommentSection(comment));
+        const commentList = comments.map((comment) => createCommentSection(comment, user.username));
 
         commentArea.append(...commentList);
 
@@ -34,14 +34,16 @@ window.addEventListener("load", async () => {
 
         document.body.append(app);
 
-        commentArea.addEventListener("reply-card", (ev) => {
+        commentArea.addEventListener("reply-relay", (ev) => {
             const card = ev.target;
-            const replyForm = createSendForm(user, "REPLY");
+            const replyingTo = ev.detail.replyingTo;
+            console.log(replyingTo);
+            const replyForm = createSendForm(user, "REPLY", replyingTo);
             card.after(replyForm);
         });
 
         app.addEventListener("send-comment", (ev) => {
-            const createCard = createCommentCard(ev.detail);
+            const createCard = createCommentSection(ev.detail);
             commentArea.appendChild(createCard);
             console.log(ev.detail);
         });

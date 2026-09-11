@@ -1,6 +1,6 @@
 import createButton from "./button.js";
 
-const createSendForm = (user, tag) => {
+const createSendForm = (user, tag, replyingTo = false) => {
     const { image, username } = user;
 
     const container = document.createElement("form");
@@ -52,6 +52,7 @@ const createSendForm = (user, tag) => {
                 createdAt: "now",
                 content: commentInput.value.trim(),
                 score: 0,
+                replyingTo: replyingTo
             }
         }));
     }
@@ -66,8 +67,8 @@ const createSendForm = (user, tag) => {
         container.addEventListener("submit", (ev) => {
             ev.preventDefault();
             generateReply();
-            container.reset();
             container.remove();
+            container.reset();
         })
     }
 

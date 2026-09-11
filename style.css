@@ -49,6 +49,9 @@ textarea {
 
 textarea:focus {
     border-color: var(--Purple-600);
+    font-family: inherit;
+    font-size: 1.4rem;
+    line-height: 1.2;
 }
 
 body {
@@ -82,7 +85,7 @@ body {
 
 .comment-section__replies {
     position: relative;
-    padding-inline-start: 3.2rem;
+    padding-inline-start: 2.5rem;
     margin-block-start: 1.6rem;
     gap: 1.6rem;
 }
@@ -125,6 +128,15 @@ body {
     aspect-ratio: 1 / 1;
 }
 
+.user-data__tag {
+    background-color: var(--Purple-600);
+    color: var(--White);
+    font-size: 1.2rem;
+    padding: 0 0.6rem;
+    display: inline-flex;
+    border-radius: 0.5rem;
+}
+
 .user-data__name {
     color: var(--Grey-800);
     font-weight: 500;
@@ -158,12 +170,17 @@ body {
 }
 
 .btn__control {
-    /* border: 1px solid; */
     min-width: 3.5rem;
     height: 3.5rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+}
+
+.comment-card__controls {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
 }
 
 .btn__control svg {
@@ -202,6 +219,19 @@ body {
     font-size: 1.8rem;
     color: var(--Purple-600);
     font-weight: 500;
+}
+
+.btn-delete,
+.btn-edit {
+    font-weight: 500;
+}
+
+.btn-edit {
+    color: var(--Purple-600);
+}
+
+.btn-delete {
+    color: var(--Pink-400);
 }
 
 
@@ -264,9 +294,9 @@ textarea {
         grid-area: 2 / 2 / 3 / 3;
     }
 
-    .btn-reply {
+    .comment-card__controls {
         position: absolute;
-        top: 1.6rem;
+        top: 2.2rem;
         right: 1.6rem;
     }
 
