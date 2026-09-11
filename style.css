@@ -51,7 +51,13 @@ textarea:focus {
     border-color: var(--Purple-600);
     font-family: inherit;
     font-size: 1.4rem;
-    line-height: 1.2;
+    line-height: 1.5;
+}
+
+textarea::placeholder {
+    font-family: inherit;
+    font-size: 1.4rem;
+    line-height: 1.5;
 }
 
 body {
@@ -296,7 +302,7 @@ textarea {
 
     .comment-card__controls {
         position: absolute;
-        top: 2.2rem;
+        top: 2rem;
         right: 1.6rem;
     }
 
@@ -314,5 +320,13 @@ textarea {
 
     textarea {
         grid-area: 1 / 2 / 3 / 3;
+    }
+
+    .comment-section__replies {
+        padding-inline-start: 6rem;
+    }
+
+    .comment-section__replies::before {
+        left: 3rem;
     }
 }

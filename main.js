@@ -1,6 +1,5 @@
 import createCommentSection from "./components/comment-section.js";
 import createSendForm from "./components/send-form.js";
-import createCommentCard from "./components/comment-card.js";
 
 window.addEventListener("load", async () => {
     try {
@@ -43,9 +42,8 @@ window.addEventListener("load", async () => {
         });
 
         app.addEventListener("send-comment", (ev) => {
-            const createCard = createCommentSection(ev.detail);
+            const createCard = createCommentSection(ev.detail, user.username);
             commentArea.appendChild(createCard);
-            console.log(ev.detail);
         });
 
 

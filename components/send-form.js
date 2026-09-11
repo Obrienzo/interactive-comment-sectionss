@@ -22,7 +22,7 @@ const createSendForm = (user, tag, replyingTo = false) => {
 
     container.append(commentInput, replyAvatar, cardButton);
 
-    function generateComment() {
+    function generateSendComment() {
         container.dispatchEvent(new CustomEvent("send-comment", {
             bubbles: true,
             detail: {
@@ -39,7 +39,7 @@ const createSendForm = (user, tag, replyingTo = false) => {
         }));
     }
 
-    function generateReply() {
+    function generateSendReply() {
         container.dispatchEvent(new CustomEvent("send-reply", {
             bubbles: true,
             detail: {
@@ -60,13 +60,13 @@ const createSendForm = (user, tag, replyingTo = false) => {
     if (tag === "SEND") {
         container.addEventListener("submit", (ev) => {
             ev.preventDefault();
-            generateComment();
+            generateSendComment();
             container.reset();
         })
     } else if (tag === "REPLY") {
         container.addEventListener("submit", (ev) => {
             ev.preventDefault();
-            generateReply();
+            generateSendReply();
             container.remove();
             container.reset();
         })
