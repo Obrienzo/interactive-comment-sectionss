@@ -21,12 +21,18 @@ const createCardControls = (user, owner) => {
         }));
     }
 
+    function editHandler(ev) {
+        ev.target.dispatchEvent(new CustomEvent("edit-comment", {
+            bubbles: true
+        }));
+    }
+
     const controlsContainer = document.createElement("div");
     controlsContainer.classList.add("comment-card__controls");
 
-    if (username === owner) {
+    if (username === owner.username) {
         const deleteButton = createCardButton("delete", "Delete", deleteIcon, deleteHandler);
-        const editButton = createCardButton("edit", "Edit", editIcon, replyHandler);
+        const editButton = createCardButton("edit", "Edit", editIcon, editHandler);
 
         controlsContainer.append(deleteButton, editButton);
     } else {

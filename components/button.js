@@ -1,7 +1,7 @@
 const createButton = (tag) => {
     const formButton = document.createElement("button");
     formButton.type = "submit"
-    formButton.classList.add("btn", "btn-send");
+    formButton.classList.add("btn-form", `btn-${tag.toLowerCase()}`);
     formButton.textContent = tag;
 
     return formButton;

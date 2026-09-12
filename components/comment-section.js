@@ -32,6 +32,12 @@ const createCommentSection = (data, owner) => {
         }
     });
 
+    sectionWrapper.addEventListener("delete-card", () => {
+        if (replySection.childNodes.length < 1) {
+            replySection.remove();
+        }
+    })
+
     return sectionWrapper;
 
 }

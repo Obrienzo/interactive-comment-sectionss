@@ -1,10 +1,10 @@
 import createButton from "./button.js";
 
-const createSendForm = (user, tag, replyingTo = false) => {
+const createSendForm = (user, tag, replyingTo = false, content) => {
     const { image, username } = user;
 
     const container = document.createElement("form");
-    container.classList.add("reply-card");
+    container.classList.add("reply-card", `reply-card--${tag.toLowerCase()}`);
 
     const commentInput = document.createElement("textarea");
     commentInput.classList.add("repy-card__comment");
@@ -12,6 +12,11 @@ const createSendForm = (user, tag, replyingTo = false) => {
     commentInput.name = "user-reply";
     commentInput.placeholder = "Add a comment...";
     commentInput.required = true;
+    if (tag === "UPDATE") {
+        commentInput.value = content;
+    } else {
+        commentInput.value = "";
+    }
 
     const replyAvatar = document.createElement("img");
     replyAvatar.classList.add("reply-card__avatar");
@@ -20,7 +25,12 @@ const createSendForm = (user, tag, replyingTo = false) => {
 
     const cardButton = createButton(tag);
 
-    container.append(commentInput, replyAvatar, cardButton);
+    if (tag === "UPDATE") {
+        container.append(commentInput, cardButton);
+    } else {
+        container.append(commentInput, replyAvatar, cardButton);
+    }
+
 
     function generateSendComment() {
         container.dispatchEvent(new CustomEvent("send-comment", {
@@ -57,6 +67,15 @@ const createSendForm = (user, tag, replyingTo = false) => {
         }));
     }
 
+    function generateUpdatedComment() {
+        container.dispatchEvent(new CustomEvent("update-comment", {
+            bubbles: true,
+            detail: {
+                editedContent: commentInput.value
+            }
+        }))
+    }
+
     if (tag === "SEND") {
         container.addEventListener("submit", (ev) => {
             ev.preventDefault();
@@ -67,6 +86,13 @@ const createSendForm = (user, tag, replyingTo = false) => {
         container.addEventListener("submit", (ev) => {
             ev.preventDefault();
             generateSendReply();
+            container.remove();
+            container.reset();
+        })
+    } else if (tag === "UPDATE") {
+        container.addEventListener("submit", (ev) => {
+            ev.preventDefault();
+            generateUpdatedComment();
             container.remove();
             container.reset();
         })

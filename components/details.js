@@ -11,7 +11,7 @@ const createCardDetails = (user, createdAt, owner) => {
 
     const userName = document.createElement("span");
     userName.classList.add("user-data__name");
-    userName.innerHTML = owner === username ? `<span>${username}</span> <span class="user-data__tag">you</span>` : `${username}`;
+    userName.innerHTML = owner.username === username ? `<span>${username}</span> <span class="user-data__tag">you</span>` : `${username}`;
 
     const postTimeline = document.createElement("span");
     postTimeline.classList.add("user-data__post-timeline");

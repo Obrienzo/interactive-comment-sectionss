@@ -1,6 +1,7 @@
 import createVoteControls from "./vote.js";
 import createCardDetails from "./details.js";
 import createCardControls from "./card-controls.js";
+import createSendForm from "./send-form.js";
 
 const createCommentCard = (data, owner) => {
     const { user, createdAt, content, score, replyingTo } = data;
@@ -14,9 +15,13 @@ const createCommentCard = (data, owner) => {
 
     const userDetails = createCardDetails(user, createdAt, owner);
 
-    const userComment = document.createElement("p");
+    const userComment = document.createElement("div");
     userComment.classList.add("comment-card__comment");
-    userComment.innerHTML = `${replyingTo ? `<span class="reply-comment">@${replyingTo} </span>` : ""}${content}`;
+
+    const commentContent = document.createElement("p");
+    commentContent.innerHTML = `<p>${replyingTo ? `<span class="reply-comment">@${replyingTo} </span>` : ""}${content}</p>`;
+
+    userComment.appendChild(commentContent);
 
     const wrapperActions = document.createElement("div");
     wrapperActions.classList.add("comment-card__card-actions");
@@ -48,9 +53,22 @@ const createCommentCard = (data, owner) => {
         }));
     });
 
-    commentContainer.addEventListener("delete-card", (ev) => {
+    commentContainer.addEventListener("delete-card", () => {
         commentContainer.remove();
     });
+
+    wrapper.addEventListener("edit-comment", () => {
+        const updateForm = createSendForm(owner, "UPDATE", replyingTo, content);
+        commentContent.classList.add("hide");
+        userComment.appendChild(updateForm);
+
+    });
+
+    wrapper.addEventListener("update-comment", (ev) => {
+        const msg = ev.detail.editedContent;
+        commentContent.classList.remove("hide");
+        commentContent.innerHTML = `<p>${replyingTo ? `<span class="reply-comment">@${replyingTo} </span>` : ""}${msg}</p>`;
+    })
 
     return commentContainer;
 }
